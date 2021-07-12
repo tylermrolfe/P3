@@ -6,7 +6,7 @@
 #include <vector>
 
 #include "Sample.h"
-
+#include "Helpers.h"
 
 
 int main() {
@@ -22,6 +22,8 @@ int main() {
 
     string latitude, longitude, waterDepth, obsvnTop, obsvnBot, gravel, sand, mud, clay, grainSize, sorting, munslColr, orgCarbn, porosity;
     vector<Sample> test;
+
+    int und = 0;
 
     while (getline(inFile, data)) {
         istringstream stream(data);
@@ -44,9 +46,14 @@ int main() {
                    stof(obsvnBot), stoi(gravel), stoi(sand), stoi(mud), stoi(clay), stof(grainSize),
                    stof(sorting), munslColr, stof(orgCarbn), stoi(porosity));
 
+        if (isUndefined(stoi(porosity))) {
+            und++;
+        }
+
         test.push_back(log);
     }
 
     cout << "Successfully created " << test.size() << " objects!" << endl;
+    cout << und << " Undefined Porosity" << endl;
     return 0;
 }
