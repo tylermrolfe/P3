@@ -5,6 +5,8 @@
 #ifndef P3_HELPERS_H
 #define P3_HELPERS_H
 
+#include<cmath>
+
 using namespace std;
 
 /// Supports int and float types to determine if parameter is undefined per the documentation
@@ -17,6 +19,19 @@ bool isUndefined(T val) {
     } else {
         return false;
     }
+}
+
+vector<int> generateSedgewickSequence(int size) {
+    vector<int> sequence;
+    int val = 1;
+    int index = 1;
+    sequence.push_back(val);
+    while (val < size) {
+        val = ((pow(4, index) + (3*pow(2, index-1) + 1)));
+        sequence.push_back(val);
+        index++;
+    }
+    return sequence;
 }
 
 #endif //P3_HELPERS_H
