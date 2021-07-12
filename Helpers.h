@@ -5,8 +5,6 @@
 #ifndef P3_HELPERS_H
 #define P3_HELPERS_H
 
-#include "Sample.h"
-
 using namespace std;
 
 /// Supports int and float types to determine if parameter is undefined per the documentation
@@ -14,7 +12,7 @@ using namespace std;
 /// Returns true if the type is undefined
 template <typename T>
 bool isUndefined(T val) {
-    if (val == -99 || val == -99.0) {
+    if (val == -99 || val == -99.0 || val == "-99") {
         return true;
     } else {
         return false;
