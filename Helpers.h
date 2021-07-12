@@ -12,7 +12,7 @@ using namespace std;
 /// Returns true if the type is undefined
 template <typename T>
 bool isUndefined(T val) {
-    if (val == -99 || val == -99.0 || val == "-99") {
+    if (val == -99 || val == -99.0) {
         return true;
     } else {
         return false;
