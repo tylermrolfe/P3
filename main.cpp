@@ -7,6 +7,7 @@
 
 #include "Sample.h"
 #include "Helpers.h"
+#include "Algorithms.h"
 
 
 int main() {
@@ -55,5 +56,6 @@ int main() {
 
     cout << "Successfully created " << test.size() << " objects!" << endl;
     cout << und << " Undefined Porosity" << endl;
+
     return 0;
 }
