@@ -9,12 +9,18 @@
 
 using namespace std;
 
+enum Sequence { Sedgewick, Hibbard };
+
 /// Shell Sort
 /// \param arr - The values being sorted
 /// \param size - The number of elements in arr
-
-void shellSort(int arr[], int size) {
-    vector<int> sequence = generateSedgewickSequence(size);
+/// \param seq - The Sequence used for the gap to sort
+void shellSort(int arr[], int size, Sequence seq) {
+    vector<int> sequence;
+    switch (seq) {
+        case Sedgewick: sequence = generateSedgewickSequence(size);
+        case Hibbard: sequence = generateHibbardSequence(size);
+    }
     for (auto gap: sequence) {
         for (int i = gap; i < size; i ++) {
             int temp = arr[i];
@@ -27,5 +33,7 @@ void shellSort(int arr[], int size) {
         }
     }
 }
+
+
 
 #endif //P3_ALGORITHMS_H
