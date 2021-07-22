@@ -57,5 +57,16 @@ int main() {
     cout << "Successfully created " << test.size() << " objects!" << endl;
     cout << und << " Undefined Porosity" << endl;
 
+    // Search sort example
+    int arr[] = { 12, 34, 54, 2, 3, 17, 20, 29, 38, 28, 122, 39, 120, 74, 36, 87 };
+    int n = sizeof(arr)/sizeof(arr[0]);
+
+    shellSort(arr, n, Sedgewick);
+
+    cout << "\nArray after sorting: \n";
+    for (int i=0; i<n; i++) {
+        cout << arr[i] << " ";
+    }
+
     return 0;
 }
