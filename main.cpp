@@ -14,6 +14,7 @@ int main() {
 
     // Constants
     const string SAMPLE_DATA = "Project3data.csv";
+    const int SAMPLE_SIZE = 181546;
     const int UNDEFINED = -99;
 
     ifstream inFile(SAMPLE_DATA);
@@ -22,9 +23,10 @@ int main() {
     getline(inFile, data);
 
     string latitude, longitude, waterDepth, obsvnTop, obsvnBot, gravel, sand, mud, clay, grainSize, sorting, munslColr, orgCarbn, porosity;
-    vector<Sample> test;
 
-    int und = 0;
+    auto *samples = new Sample[SAMPLE_SIZE];
+
+    int index = 0;
 
     while (getline(inFile, data)) {
         istringstream stream(data);
@@ -47,25 +49,16 @@ int main() {
                    stof(obsvnBot), stoi(gravel), stoi(sand), stoi(mud), stoi(clay), stof(grainSize),
                    stof(sorting), munslColr, stof(orgCarbn), stoi(porosity));
 
-        if (isUndefined(stoi(porosity))) {
-            und++;
-        }
-
-        test.push_back(log);
+        samples[index] = log;
+        index++;
     }
 
-    cout << "Successfully created " << test.size() << " objects!" << endl;
-    cout << und << " Undefined Porosity" << endl;
+    cout << "Successfully created " << index << " objects!" << endl;
 
-    // Search sort example
-    int arr[] = { 12, 34, 54, 2, 3, 17, 20, 29, 38, 28, 122, 39, 120, 74, 36, 87 };
-    int n = sizeof(arr)/sizeof(arr[0]);
+    shellSort(samples, SAMPLE_SIZE, Hibbard, Clay);
 
-    shellSort(arr, n, Sedgewick);
-
-    cout << "\nArray after sorting: \n";
-    for (int i=0; i<n; i++) {
-        cout << arr[i] << " ";
+    for (int i = SAMPLE_SIZE; i > SAMPLE_SIZE-100; i--) {
+        cout << samples[i].clay << " ";
     }
 
     return 0;
