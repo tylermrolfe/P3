@@ -10,7 +10,7 @@
 using namespace std;
 
 class Sample {
-private:
+public:
     float latitude;
     float longitude;
     int waterDepth;
@@ -26,7 +26,8 @@ private:
     string munslColr;
     float orgCarbn;
     int porosity;
-public:
+
+    Sample();
     Sample(float latitude, float longitude, int waterDepth, float obsvnTop, float obsvnBot, int gravel, int sand, int mud, int clay, float grainSize, float sorting, string& munslColr, float orgCarbn, int porosity);
 };
 

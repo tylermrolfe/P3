@@ -23,3 +23,20 @@ Sample::Sample(float latitude, float longitude, int waterDepth, float obsvnTop, 
     this->porosity = porosity;
 
 }
+
+Sample::Sample() {
+    this->latitude = 0.0;
+    this->longitude = 0.0;
+    this->waterDepth = 0;
+    this->obsvnTop = 0.0;
+    this->obsvnBot = 0.0;
+    this->gravel = 0;
+    this->sand = 0;
+    this->mud = 0;
+    this->clay = 0;
+    this->grainSize = 0.0;
+    this->sorting = 0.0;
+    this->munslColr = "";
+    this->orgCarbn = 0.0;
+    this->porosity = 0;
+}
