@@ -4,9 +4,9 @@
 
 #include "Sample.h"
 
-Sample::Sample(float latitude, float longitude, int waterDepth, float obsvnTop, float obsvnBot, int gravel,
-               int sand, int mud, int clay, float grainSize, float sorting, string& munslColr, float orgCarbn,
-               int porosity) {
+Sample::Sample(float latitude, float longitude, float waterDepth, float obsvnTop, float obsvnBot, float gravel,
+               float sand, float mud, float clay, float grainSize, float sorting, string& munslColr, float orgCarbn,
+               float porosity) {
     this->latitude = latitude;
     this->longitude = longitude;
     this->waterDepth = waterDepth;

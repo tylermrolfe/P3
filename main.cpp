@@ -45,20 +45,69 @@ int main() {
         getline(stream, orgCarbn, ',');
         getline(stream, porosity, ',');
 
-        Sample log(stof(latitude), stof(longitude), stoi(waterDepth), stof(obsvnTop),
-                   stof(obsvnBot), stoi(gravel), stoi(sand), stoi(mud), stoi(clay), stof(grainSize),
-                   stof(sorting), munslColr, stof(orgCarbn), stoi(porosity));
+        Sample log(stof(latitude), stof(longitude), stof(waterDepth), stof(obsvnTop),
+                   stof(obsvnBot), stof(gravel), stof(sand), stof(mud), stof(clay), stof(grainSize),
+                   stof(sorting), munslColr, stof(orgCarbn), stof(porosity));
 
         samples[index] = log;
         index++;
     }
 
-    cout << "Successfully created " << index << " objects!" << endl;
+    int valueType = 0;
+    int sortType = 0;
+    DataType result;
+    //cout << "Successfully created " << index << " objects!" << endl;
 
-    shellSort(samples, SAMPLE_SIZE, Hibbard, Clay);
+    cout << "Welcome to the Camparison of Sediment Rates on the Coast of the US and its Territories Program! \n";
 
-    for (int i = SAMPLE_SIZE; i > SAMPLE_SIZE-100; i--) {
-        cout << samples[i].clay << " ";
+    cout << "Choose what to sort by! \n";
+    cout << "1. Latitude\n2. Longitude\n3. Water Depth\n4. Gravel\n5. Sand\n6. Mud\n7. Clay\n8. Grain Size\n9. Standard Deviation of Grain Size in Sample\n10. Percent Carbon\n11. Porosity\n";
+
+    while (valueType < 1 || valueType > 11) {
+        cin >> valueType;
+        switch (valueType) {
+            case 1: result = Latitude; break;
+            case 2: result = Longitude; break;
+            case 3: result = WaterDepth; break;
+            case 4: result = Gravel; break;
+            case 5: result = Sand; break;
+            case 6: result = Mud; break;
+            case 7: result = Clay; break;
+            case 8: result = GrainSize; break;
+            case 9: result = Sorting; break;
+            case 10: result = OrgCarbn; break;
+            case 11: result = Porosity; break;
+            default: cout << "Please choose a valid response!\n"; break;
+        }
+    }
+
+    cout << "\nChoose how to Sort!\n";
+    cout << "1. Merge Sort\n2. Quick Sort\n3. Shell Sort\n";
+
+    while (sortType < 1 || sortType > 3) {
+        cin >> sortType;
+        switch (sortType) {
+            case 1:
+                mergeSort(samples, 0, SAMPLE_SIZE, result); break;
+            case 2: break;
+            case 3:
+                cout << "Which sequence do you want to use?\n";
+                cout << "1. Sedgewick\n2. Hibbard\n";
+                while (sortType < 1 || sortType > 2) {
+                    cin >> sortType;
+                    switch (sortType) {
+                        case 1: shellSort(samples, SAMPLE_SIZE, Sedgewick, result); break;
+                        case 2: shellSort(samples, SAMPLE_SIZE, Hibbard, result); break;
+                        default: cout << "Please choose a valid response!\n"; break;
+                    }
+                }
+                break;
+                default: cout << "Please choose a valid response!\n"; break;
+        }
+    }
+
+    for (int i = SAMPLE_SIZE - 1; i >= 180000; i--) {
+        cout << samples[i].mud << " ";
     }
 
     return 0;
