@@ -9,7 +9,6 @@
 #include "Helpers.h"
 #include "Algorithms.h"
 
-
 int main() {
 
     // Constants
@@ -87,8 +86,13 @@ int main() {
     while (sortType < 1 || sortType > 3) {
         cin >> sortType;
         switch (sortType) {
-            case 1:
-                mergeSort(samples, 0, SAMPLE_SIZE, result); break;
+            case 1: {
+                auto t1 = Clock::now();
+                mergeSort(samples, 0, SAMPLE_SIZE, result);
+                auto t2 = Clock::now();
+                cout << "The Merge Sort took " << duration_cast<nanoseconds>(t2 - t1).count() << " nano seconds to run." << endl;
+                break;
+            }
             case 2: break;
             case 3:
                 cout << "Which sequence do you want to use?\n";

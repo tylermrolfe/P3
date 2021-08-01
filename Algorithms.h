@@ -5,9 +5,11 @@
 #ifndef P3_ALGORITHMS_H
 #define P3_ALGORITHMS_H
 #include "Helpers.h"
+#include <chrono>
 
+using namespace std::chrono;
 
-using namespace std;
+typedef high_resolution_clock Clock;
 
 enum Sequence { Sedgewick, Hibbard };
 enum DataType{ Latitude, Longitude, WaterDepth, OBSVNTop, OBSVNBot, Gravel, Sand, Mud, Clay, GrainSize, Sorting, MunsColr, OrgCarbn, Porosity};
@@ -18,6 +20,7 @@ enum DataType{ Latitude, Longitude, WaterDepth, OBSVNTop, OBSVNBot, Gravel, Sand
 /// \param seq - The Sequence used for the gap to sort
 /// \param type - The data type the user requested -- See the enum type DataType for options
 void shellSort(Sample arr[], int size, Sequence seq, DataType type) {
+    auto t1 = Clock::now();
     vector<int> sequence;
     switch (seq) {
         case Sedgewick: sequence = generateSedgewickSequence(size);
@@ -47,6 +50,11 @@ void shellSort(Sample arr[], int size, Sequence seq, DataType type) {
 
             arr[j] = temp;
         }
+    }
+    auto t2 = Clock::now();
+    switch (seq) {
+        case Hibbard: cout << "The Shell sort via Hibbard sequence took " << duration_cast<seconds>(t2 - t1).count() << " nano seconds to run." << endl; break;
+        case Sedgewick: cout << "The Shell sort via Sedgewick sequence took " << duration_cast<seconds>(t2 - t1).count() << " nano seconds to run." << endl; break;
     }
 }
 
