@@ -93,7 +93,8 @@ int main() {
                 cout << "The Merge Sort took " << duration_cast<nanoseconds>(t2 - t1).count() << " nano seconds to run." << endl;
                 break;
             }
-            case 2: break;
+            case 2:
+                QuickSort(samples, 0, SAMPLE_SIZE, Clay); break;
             case 3:
                 cout << "Which sequence do you want to use?\n";
                 cout << "1. Sedgewick\n2. Hibbard\n";
@@ -110,8 +111,8 @@ int main() {
         }
     }
 
-    for (int i = SAMPLE_SIZE - 1; i >= 180000; i--) {
-        cout << samples[i].mud << " ";
+    for (int i = SAMPLE_SIZE - 1; i >= 0; i--) {
+        cout << ArrayType(samples, i, result) << " ";
     }
 
     return 0;

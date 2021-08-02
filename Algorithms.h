@@ -12,14 +12,14 @@ using namespace std::chrono;
 typedef high_resolution_clock Clock;
 
 enum Sequence { Sedgewick, Hibbard };
-enum DataType{ Latitude, Longitude, WaterDepth, OBSVNTop, OBSVNBot, Gravel, Sand, Mud, Clay, GrainSize, Sorting, MunsColr, OrgCarbn, Porosity};
+
 
 /// Shell Sort
 /// \param arr - The values being sorted
 /// \param size - The number of elements in arr
 /// \param seq - The Sequence used for the gap to sort
 /// \param type - The data type the user requested -- See the enum type DataType for options
-void shellSort(Sample arr[], int size, Sequence seq, DataType type) {
+ void shellSort(Sample arr[], int size, Sequence seq, DataType type) {
     auto t1 = Clock::now();
     vector<int> sequence;
     switch (seq) {
@@ -59,65 +59,41 @@ void shellSort(Sample arr[], int size, Sequence seq, DataType type) {
 }
 
 /// Partitions the array used in Quick Sort based off the first elemet in the array
-int PartitionArray(Sample arr[], int size, DataType& type) {
-    unsigned int i = 0;
+int PartitionArray(Sample arr[], int startPoint, int endPoint, DataType type) {
+    unsigned int i = startPoint;
     float partitionPoint;
     float arrUp;
     float arrDown;
     int up;
     int down;
 
+    partitionPoint = ArrayType(arr, i, type);
 
-    switch (type) {
-        case Latitude: partitionPoint = arr[i].latitude; break;
-        case Longitude: partitionPoint = arr[i].longitude; break;
-        case WaterDepth: partitionPoint = arr[i].waterDepth; break;
-        case OBSVNTop: partitionPoint = arr[i].obsvnTop; break;
-        case OBSVNBot: partitionPoint = arr[i].obsvnBot; break;
-        case Gravel: partitionPoint = arr[i].gravel; break;
-        case Sand: partitionPoint = arr[i].sand; break;
-        case Mud: partitionPoint = arr[i].mud; break;
-        case Clay: partitionPoint = arr[i].clay; break;
-        case GrainSize: partitionPoint = arr[i].grainSize; break;
-        case Sorting: partitionPoint = arr[i].sorting; break;
-        case OrgCarbn: partitionPoint = arr[i].orgCarbn; break;
-        case Porosity: partitionPoint = arr[i].porosity; break;
-    }
-
-    while (isUndefined(partitionPoint)) {
-        partitionPoint = arr[i++].clay;
-    }
     up = i + 1;
-    down = size - 1;
+    down = endPoint;
+    arrUp = ArrayType(arr, up, type);
+    arrDown = ArrayType(arr, down, type);
 
     while (up < down) {
-        switch (type) {
-            case Latitude: arrUp = arr[up].latitude; arrDown = arr[down].latitude; break;
-            case Longitude: arrUp = arr[up].longitude; arrDown = arr[down].longitude; break;
-            case WaterDepth: arrUp = arr[up].waterDepth; arrDown = arr[down].waterDepth; break;
-            case OBSVNTop: arrUp = arr[up].obsvnTop; arrDown = arr[down].obsvnTop; break;
-            case OBSVNBot: arrUp = arr[up].obsvnBot; arrDown = arr[down].obsvnBot; break;
-            case Gravel: arrUp = arr[up].gravel; arrDown = arr[down].gravel; break;
-            case Sand: arrUp = arr[up].sand; arrDown = arr[down].sand; break;
-            case Mud: arrUp = arr[up].mud; arrDown = arr[down].mud; break;
-            case Clay: arrUp = arr[up].clay; arrDown = arr[down].clay; break;
-            case GrainSize: arrUp = arr[up].grainSize; arrDown = arr[down].grainSize; break;
-            case Sorting: arrUp = arr[up].sorting; arrDown = arr[down].sorting; break;
-            case OrgCarbn: arrUp = arr[up].orgCarbn; arrDown = arr[down].orgCarbn; break;
-            case Porosity: arrUp = arr[up].porosity; arrDown = arr[down].porosity; break;
-        }
-        while (arrUp < partitionPoint) { //arrUp < partitionPoint
+        while (arrUp <= partitionPoint && up < endPoint) {
             up++;
+            arrUp = ArrayType(arr, up, type);
         }
-        while (arrDown > partitionPoint) { //arrDown > partitionPoint
+        while (arrDown >= partitionPoint && down > startPoint) {
             down--;
+            arrDown = ArrayType(arr, down, type);
         }
-        if (arrUp > arrDown) { //arrUp > arrDown
+        if (up < down) {
             swap(arr[up], arr[down]);
+            arrUp = ArrayType(arr, up, type);
+            arrDown = ArrayType(arr, down, type);
         }
     }
-    swap(arr[i], arr[down]);
-    return down;
+    if (arrDown <= partitionPoint && down != i) {
+        swap(arr[i], arr[down]);
+        return down;
+    }
+    return i;
 }
 
 
@@ -127,13 +103,13 @@ int PartitionArray(Sample arr[], int size, DataType& type) {
 /// \param startingPoint - the starting point of the section actively being sorted
 /// \param endPoint - the end point of the section actively being sorted
 /// \param type - The data type the user requested -- See the enum type DataType for options
-void QuickSort(Sample arr[], int size, int startingPoint, int endPoint, DataType& type) {
+void QuickSort(Sample arr[], int startingPoint, int endPoint, DataType type) {
     int partitionPoint;
 
     if (startingPoint < endPoint) {
-        partitionPoint = PartitionArray(arr, size, type); //Clay
-        QuickSort(arr, size, startingPoint, partitionPoint, type);
-        QuickSort(arr, size, partitionPoint + 1, endPoint, type);
+        partitionPoint = PartitionArray(arr, startingPoint, endPoint, type); //Clay
+        QuickSort(arr, startingPoint, partitionPoint - 1, type);
+        QuickSort(arr, partitionPoint + 1, endPoint, type);
     }
 }
 
