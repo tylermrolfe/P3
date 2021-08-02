@@ -52,8 +52,8 @@ void shellSort(Sample arr[], int size, Sequence seq, DataType type) {
     }
     auto t2 = Clock::now();
     switch (seq) {
-        case Hibbard: cout << "The Shell sort via Hibbard sequence took " << duration_cast<seconds>(t2 - t1).count() << " nano seconds to run." << endl; break;
-        case Sedgewick: cout << "The Shell sort via Sedgewick sequence took " << duration_cast<seconds>(t2 - t1).count() << " nano seconds to run." << endl; break;
+        case Hibbard: cout << "The Shell sort via Hibbard sequence took " << duration_cast<seconds>(t2 - t1).count() << " seconds to run." << endl; break;
+        case Sedgewick: cout << "The Shell sort via Sedgewick sequence took " << duration_cast<seconds>(t2 - t1).count() << " seconds to run." << endl; break;
     }
 }
 
@@ -309,12 +309,13 @@ void mergeSort(Sample samples[], int front, int back, DataType& type) {
     merge(samples, front, middle, back, type);
 }
 
+// Binary Search implementation on a sorted array
 int Search(Sample arr[], int starting, int ending, float x, DataType type) {
     if (ending >= starting) {
         int mid = starting + (ending - starting) / 2;
 
         if (ArrayType(arr, mid, type) == x) {
-            return mid;
+            return mid; // the index of the item in the array
         }
 
         if (ArrayType(arr, mid, type) > x) {

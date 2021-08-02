@@ -13,7 +13,7 @@ using namespace std;
 int main() {
 
     // Constants
-    const string SAMPLE_DATA = "/Users/tylermrolfe/CLionProjects/P3/cmake-build-debug/Project3data.csv";
+    const string SAMPLE_DATA = "Project3data.csv";
     const int SAMPLE_SIZE = 181546;
     const int UNDEFINED = -99;
 
@@ -100,7 +100,7 @@ int main() {
                 auto t1 = Clock::now();
                 QuickSort(samples, 0, SAMPLE_SIZE - 1, result);
                 auto t2 = Clock::now();
-                cout << "The Quick Sort took " << duration_cast<nanoseconds>(t2 - t1).count() << " nano seconds to run." << endl;
+                cout << "The Quick Sort took " << duration_cast<seconds>(t2 - t1).count() << " seconds to run." << endl;
                 break;
             }
             case 3:
@@ -162,3 +162,7 @@ int main() {
 
     return 0;
 }
+
+//Citation for Shell Sort sequences
+//Source: https://en.wikipedia.org/wiki/Shellsort
+//Use: Source for conceptualization of shell sort sequences
