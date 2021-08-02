@@ -8,18 +8,19 @@
 #include "Sample.h"
 #include "Helpers.h"
 #include "Algorithms.h"
+using namespace std;
 
 int main() {
 
     // Constants
-    const string SAMPLE_DATA = "Project3data.csv";
+    const string SAMPLE_DATA = "/Users/tylermrolfe/CLionProjects/P3/cmake-build-debug/Project3data.csv";
     const int SAMPLE_SIZE = 181546;
     const int UNDEFINED = -99;
 
     ifstream inFile(SAMPLE_DATA);
 
-    string data;
-    getline(inFile, data);
+    string inputData;
+    getline(inFile, inputData);
 
     string latitude, longitude, waterDepth, obsvnTop, obsvnBot, gravel, sand, mud, clay, grainSize, sorting, munslColr, orgCarbn, porosity;
 
@@ -27,8 +28,8 @@ int main() {
 
     int index = 0;
 
-    while (getline(inFile, data)) {
-        istringstream stream(data);
+    while (getline(inFile, inputData)) {
+        istringstream stream(inputData);
         getline(stream, latitude, ',');
         getline(stream, longitude, ',');
         getline(stream, waterDepth, ',');
@@ -55,7 +56,6 @@ int main() {
     int valueType = 0;
     int sortType = 0;
     DataType result;
-    //cout << "Successfully created " << index << " objects!" << endl;
 
     cout << "Welcome to the Camparison of Sediment Rates on the Coast of the US and its Territories Program! \n";
 
@@ -76,7 +76,10 @@ int main() {
             case 9: result = Sorting; break;
             case 10: result = OrgCarbn; break;
             case 11: result = Porosity; break;
-            default: cout << "Please choose a valid response!\n"; break;
+            default: cout << "Please choose a valid response!\n"; valueType = 12; break;
+        }
+        if (valueType == 12) {
+            continue;
         }
     }
 
@@ -93,8 +96,13 @@ int main() {
                 cout << "The Merge Sort took " << duration_cast<nanoseconds>(t2 - t1).count() << " nano seconds to run." << endl;
                 break;
             }
-            case 2:
-                QuickSort(samples, 0, SAMPLE_SIZE, Clay); break;
+            case 2: {
+                auto t1 = Clock::now();
+                QuickSort(samples, 0, SAMPLE_SIZE - 1, result);
+                auto t2 = Clock::now();
+                cout << "The Quick Sort took " << duration_cast<nanoseconds>(t2 - t1).count() << " nano seconds to run." << endl;
+                break;
+            }
             case 3:
                 cout << "Which sequence do you want to use?\n";
                 cout << "1. Sedgewick\n2. Hibbard\n";
@@ -111,8 +119,45 @@ int main() {
         }
     }
 
-    for (int i = SAMPLE_SIZE - 1; i >= 0; i--) {
-        cout << ArrayType(samples, i, result) << " ";
+//    for (int i = SAMPLE_SIZE - 1; i >= 100; i--) {
+//        cout << fixed << showpoint;
+//        cout << setprecision(2);
+//        cout << ArrayType(samples, i, result) << " ";
+//    }
+
+    cout << endl;
+
+    float searchVal;
+    string tempStr;
+
+    cout << "Choose a value of your type " << "to search for!" << endl;
+    cin >> tempStr;
+    searchVal = stof(tempStr);
+    index = Search(samples, 0, SAMPLE_SIZE - 1, searchVal, result);
+    //index = Search(samples, 0, SAMPLE_SIZE - 1, searchVal, result);
+    if (searchVal == UNDEFINED) {
+        cout << "Sorry, there is no sample corresponding to this value. Goobye!" << endl;
+    }
+    else {
+        cout << "Latitude: " << samples[index].latitude << endl;
+        cout << "Longitude: " << samples[index].longitude << endl;
+        cout << "Water Depth: " << samples[index].waterDepth << endl;
+        cout << "Observation Top: " << samples[index].obsvnTop << endl;
+        cout << "Observation Bottom: " << samples[index].obsvnBot << endl;
+        cout << "Gravel: " << samples[index].gravel << endl;
+        cout << "Sand: " << samples[index].sand << endl;
+        cout << "Mud: " << samples[index].mud << endl;
+        cout << "Clay: " << samples[index].clay << endl;
+        cout << "Grain Size: " << samples[index].grainSize << endl;
+        cout << "Sorting: " << samples[index].sorting << endl;
+        cout << "Organic Carbon Ratio: " << samples[index].orgCarbn << endl;
+        cout << "Porosity: " << samples[index].porosity << endl;
+        cout << endl;
+        cout << "Here are similar samples and their locations!" << endl;
+        cout << "Latitude: " << samples[index + 1].latitude << " Longitude: " << samples[index + 1].longitude << endl;
+        cout << "Latitude: " << samples[index - 1].latitude << " Longitude: " << samples[index - 1].longitude << endl;
+        cout << endl;
+        cout << endl;
     }
 
     return 0;

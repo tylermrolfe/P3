@@ -11,6 +11,7 @@ using namespace std;
 
 enum DataType{ Latitude, Longitude, WaterDepth, OBSVNTop, OBSVNBot, Gravel, Sand, Mud, Clay, GrainSize, Sorting, MunsColr, OrgCarbn, Porosity};
 
+
 /// Supports int and float types to determine if parameter is undefined per the documentation
 ///
 /// Returns true if the type is undefined
@@ -69,6 +70,7 @@ float ArrayType(Sample arr[], int index, DataType& type) {
         case Sorting: return arr[index].sorting;
         case OrgCarbn: return arr[index].orgCarbn;
         case Porosity: return arr[index].porosity;
+        default: break;
     }
 }
 
